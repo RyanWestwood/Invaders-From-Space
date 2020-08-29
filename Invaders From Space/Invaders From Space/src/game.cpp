@@ -88,6 +88,12 @@ void Game::draw() {
 }
 
 void Game::quit() {
+	//TODO: Clean up clean all fonts, sounds and textures.
+	// Sound::Clean
+	// Texture::Clean
+	// Font::Clean
+
+
 	Mix_Quit();
 	TTF_Quit();
 	IMG_Quit();

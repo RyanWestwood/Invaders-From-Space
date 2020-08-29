@@ -1,5 +1,8 @@
 #pragma once
 #include "macros.h"
+#include "soundManager.h"
+#include "textureManager.h"
+#include "fontManager.h"
 
 class Game {
 public: 
@@ -13,6 +16,13 @@ public:
 	void update();
 	void draw();
 	void quit();
+
+	//Test
+	TTF_Font* font;
+	Mix_Chunk* sfx;
+	Mix_Music* music;
+	SDL_Texture* texture;
+	SDL_Rect textureRect;
 
 private:
 	SDL_Window* window = nullptr;
