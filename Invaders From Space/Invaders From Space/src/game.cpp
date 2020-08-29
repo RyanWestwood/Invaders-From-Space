@@ -1,4 +1,5 @@
 #include "game.h"
+#include "mainMenu.h"
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
@@ -54,11 +55,38 @@ bool Game::init() {
 	return success;
 }
 
-void Game::gameplay() {
+Game::Game() {
+	menuOptions = mainmenu;
+}
+
+void Game::start() {
 	while (isRunning) {
-		input();
-		update();
-		draw();
+		switch (menuOptions)
+		{
+		case mainmenu:
+		{
+			// Do main menu
+			MainMenu mainMenu = MainMenu();
+			while (mainMenu.isRunning()) {
+				mainMenu.input();
+				mainMenu.update();
+				mainMenu.draw();
+			}
+			break;
+		}
+		case gameplay:
+		{
+			//	Do Gameplay
+			break;
+		}
+		case hiscores:
+		{
+			//	Do hiscores
+			break;
+		}
+		default:
+			break;
+		}
 	}
 	quit();
 }
@@ -67,11 +95,11 @@ void Game::input() {
 	SDL_PollEvent(&event);
 	switch (event.type)
 	{
-		case SDL_QUIT:
-			isRunning = false;
-			break;
-		default:
-			break;
+	case SDL_QUIT:
+		isRunning = false;
+		break;
+	default:
+		break;
 	}
 }
 

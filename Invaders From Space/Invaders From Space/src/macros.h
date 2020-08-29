@@ -4,8 +4,15 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include <string>
+#include <vector>
+#include <array>
 
 #include <iostream>
+
+#include "soundManager.h"
+#include "fontManager.h"
+#include "textureManager.h"
+#include "button.h"
 
 using std::string;
 

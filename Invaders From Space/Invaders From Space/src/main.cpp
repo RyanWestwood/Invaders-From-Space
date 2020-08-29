@@ -9,7 +9,7 @@ int main(int argc, char* args[])
 		Print("Failed to init SDL subsystems!");
 		return 1;
 	}
-	game.gameplay();
+	game.start();
 
 	return 0;
 }
