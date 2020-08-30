@@ -65,7 +65,6 @@ void Game::start() {
 		{
 		case mainmenu:
 		{
-			Print("MainMenu");
 			MainMenu mainMenu = MainMenu(this);
 			while (mainMenu.isRunning) {
 				mainMenu.input();
@@ -76,19 +75,16 @@ void Game::start() {
 		}
 		case gameplay:
 		{
-			Print("GamePlay");
-			GameLoop gameloop = GameLoop();
+			GameLoop gameloop = GameLoop(this);
 			while (gameloop.isRunning) {
 				gameloop.input();
 				gameloop.update();
 				gameloop.draw();
 			}
-			//	Do Gameplay
 			break;
 		}
 		case hiscores:
 		{
-			Print("HiScores");
 			Hiscores hiScores = Hiscores(this);
 			while (hiScores.isRunning) {
 				hiScores.input();
@@ -99,13 +95,12 @@ void Game::start() {
 		}
 		case options:
 		{
-			Print("Options");
-			//Hiscores hiScores = Hiscores(this);
-			//while (hiScores.isRunning) {
-			//	hiScores.input();
-			//	hiScores.update();
-			//	hiScores.draw();
-			//}
+			Options option = Options(this);
+			while (option.isRunning) {
+				option.input();
+				option.update();
+				option.draw();
+			}
 			break;
 		}
 		default:

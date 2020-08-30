@@ -57,7 +57,7 @@ private:
 	std::array<std::array<SDL_Rect, 9>, 7> test;
 	SDL_Rect coverDst[9][16];
 
-	/// Borders
+	// Borders
 	SDL_Texture* border = nullptr;
 	std::array<SDL_Rect, 9> borderTitleSrc;
 	std::array<SDL_Rect, 9> borderTitleDst;

@@ -6,6 +6,7 @@ bool MainMenu::isRunning = false;
 MainMenu::MainMenu(Game* game) {
 	this->game = game;
 	isRunning = true;
+
 	space = TextureManager::loadTexture("space.png");
 	spaceSrc = TextureManager::loadTextureRect("space.png");
 	createLayer(9, 16, 0, spaceDst);

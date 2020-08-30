@@ -3,6 +3,7 @@
 #include "mainMenu.h"
 #include "hiscores.h"
 #include "gameloop.h"
+#include "options.h"
 
 class Game {
 public: 

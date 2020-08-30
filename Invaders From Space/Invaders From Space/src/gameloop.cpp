@@ -2,6 +2,17 @@
 
 bool GameLoop::isRunning = false;
 
-GameLoop::GameLoop() {
+GameLoop::GameLoop(Game* game) {
 	isRunning = true;
+	this->game = game;
+}
+
+void GameLoop::input() {
+
+}
+void GameLoop::update() {
+
+}
+void GameLoop::draw() {
+
 }

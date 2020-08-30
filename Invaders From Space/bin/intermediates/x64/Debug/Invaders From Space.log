@@ -1,11 +1,13 @@
-﻿  TextureManager.cpp
-  button.cpp
+﻿  button.cpp
   buttonManager.cpp
   fontManager.cpp
   game.cpp
+  gameloop.cpp
   hiscores.cpp
   main.cpp
   mainMenu.cpp
+  options.cpp
   soundManager.cpp
+  TextureManager.cpp
   Generating Code...
   Invaders From Space.vcxproj -> C:\Users\RyanW\Documents\Work\GitHub\Portfolio\Invaders-From-Space\Invaders From Space\bin\x64\Debug\Invaders From Space.exe

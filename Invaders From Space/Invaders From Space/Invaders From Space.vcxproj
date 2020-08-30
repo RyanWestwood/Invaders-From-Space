@@ -167,6 +167,7 @@
     <ClCompile Include="src\hiscores.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenu.cpp" />
+    <ClCompile Include="src\options.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
   </ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="src\hiscores.h" />
     <ClInclude Include="src\macros.h" />
     <ClInclude Include="src\mainMenu.h" />
+    <ClInclude Include="src\options.h" />
     <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\test.h" />
     <ClInclude Include="src\textureManager.h" />
