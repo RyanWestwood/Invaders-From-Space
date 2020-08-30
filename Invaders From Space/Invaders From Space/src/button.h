@@ -9,6 +9,7 @@ public:
 
 	Button(SDL_Rect* rect, const char* message, ButtonManager* buttonManager);
 	~Button();
+	void clean();
 
 	void setColor(SDL_Color color) { this->color = color; }
 

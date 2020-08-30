@@ -67,7 +67,7 @@ void Game::start() {
 		{
 			// Do main menu
 			MainMenu mainMenu = MainMenu();
-			while (mainMenu.isRunning()) {
+			while (mainMenu.isRunning) {
 				mainMenu.input();
 				mainMenu.update();
 				mainMenu.draw();

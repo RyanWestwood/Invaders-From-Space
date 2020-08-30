@@ -1,6 +1,8 @@
 #pragma once
 #include "macros.h"
+#include "mainMenu.h"
 class Button;
+class MainMenu;
 
 class ButtonManager {
 public:

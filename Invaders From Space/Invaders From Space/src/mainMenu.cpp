@@ -1,6 +1,9 @@
 #include "mainMenu.h"
 
+bool MainMenu::isRunning = false;
+
 MainMenu::MainMenu() {
+	isRunning = true;
 	space = TextureManager::loadTexture("space.png");
 	spaceSrc = TextureManager::loadTextureRect("space.png");
 	createLayer(9, 16, 0, spaceDst);
@@ -21,7 +24,21 @@ MainMenu::MainMenu() {
 	logoSrc = TextureManager::loadTextureRect("logo.png");
 	logoDst = { 50,50, 486, 213 };
 
-	buttonManager.setButtons();
+	buttonManager = new ButtonManager();
+
+	playDst = { 138, 363, 300, 100 };
+	play = new Button(&playDst, "PLAY", buttonManager);
+
+	hiscoresDst = { 138, 513, 300, 100 };
+	hiscores = new Button(&hiscoresDst, "HISCORES", buttonManager);
+
+	optionsDst = { 138, 663, 300, 100 };
+	options = new Button(&optionsDst, "OPTIONS", buttonManager);
+
+	exitDst = { 138, 813, 300, 100 };
+	exit = new Button(&exitDst, "EXIT", buttonManager);
+
+	buttonManager->setButtons();
 }
 
 MainMenu::~MainMenu() {
@@ -35,6 +52,10 @@ MainMenu::~MainMenu() {
 	border = nullptr;
 	TextureManager::clean(logo);
 	logo = nullptr;
+	delete play;
+	delete hiscores;
+	delete options;
+	delete exit;
 }
 
 void MainMenu::input() {
@@ -42,20 +63,21 @@ void MainMenu::input() {
 	{
 		if (Game::event.type == SDL_QUIT)
 		{
-			isRunning(false);
+			isRunning = false;
 		}
 		else if (Game::event.type == SDL_KEYDOWN)
 		{
 			switch (Game::event.key.keysym.sym)
 			{
 			case SDLK_UP:
-				buttonManager.moveUp();
+				buttonManager->moveUp();
 				break;
 
 			case SDLK_DOWN:
-				buttonManager.moveDown();
+				buttonManager->moveDown();
 				break;
 			case SDLK_RETURN:
+				buttonManager->select();
 				break;
 
 			default:
@@ -77,26 +99,26 @@ void MainMenu::draw() {
 	drawLayer(9, 7, cover, coverSrc, coverDst);
 	TextureManager::drawNine(border, borderSrc, borderDst);
 	TextureManager::draw(logo, &logoSrc, &logoDst);
-	
-	play.draw();
-	hiscores.draw();
-	options.draw();
-	exit.draw();
+
+	play->draw();
+	hiscores->draw();
+	options->draw();
+	exit->draw();
 
 	SDL_RenderPresent(Game::renderer);
 }
 
-void MainMenu::createLayer(int width, int height, int yOffset , SDL_Rect dst[9][16]) {
+void MainMenu::createLayer(int width, int height, int yOffset, SDL_Rect dst[9][16]) {
 	for (int x = 0; x < width; x++)
 	{
 		for (int y = 0; y < height; y++)
 		{
-			dst[x][y] = { x * 64, yOffset+ y * 64, 64, 64 };
+			dst[x][y] = { x * 64, yOffset + y * 64, 64, 64 };
 		}
 	}
 }
 
-void MainMenu::drawLayer(int width, int height, SDL_Texture* texture, SDL_Rect src , SDL_Rect dst[9][16]) {
+void MainMenu::drawLayer(int width, int height, SDL_Texture* texture, SDL_Rect src, SDL_Rect dst[9][16]) {
 	for (int x = 0; x < width; x++)
 	{
 		for (int y = 0; y < height; y++)

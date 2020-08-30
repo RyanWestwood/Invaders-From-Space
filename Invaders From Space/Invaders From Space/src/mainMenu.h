@@ -1,5 +1,8 @@
 #pragma once
 #include "macros.h"
+#include "buttonManager.h"
+class Button;
+class ButtonManager;
 
 class MainMenu {
 public:
@@ -15,11 +18,12 @@ public:
 	void drawLayer(int width, int height, SDL_Texture* texture, SDL_Rect src, SDL_Rect dst[9][16]);
 	void createLayer(int width, int height, int yOffset, SDL_Rect dst[9][16]);
 
-	bool isRunning() { return running; }
-	void isRunning(bool value) { running = value; }
+	static bool isRunning;
+	//bool isRunning() { return running; }
+	//void isRunning(bool value) { running = value; }
 
 private:
-	bool running = true;
+	//bool running = true;
 
 	//	Width height in tiles.
 	//	9,	16.
@@ -50,17 +54,17 @@ private:
 
 	//	Buttons
 
-	ButtonManager buttonManager = ButtonManager();
+	ButtonManager* buttonManager;
 
-	SDL_Rect playDst = { 138, 363, 300, 100 };
-	Button play = Button(&playDst, "PLAY", &buttonManager);
+	SDL_Rect playDst;
+	Button* play;
 
-	SDL_Rect hiscoresDst = { 138, 513, 300, 100 };
-	Button hiscores = Button(&hiscoresDst, "HISCORES", &buttonManager);
+	SDL_Rect hiscoresDst;
+	Button* hiscores;
 
-	SDL_Rect optionsDst = { 138, 663, 300, 100 };
-	Button options = Button(&optionsDst, "OPTIONS", &buttonManager);
+	SDL_Rect optionsDst;
+	Button* options;
 
-	SDL_Rect exitDst = { 138, 813, 300, 100 };
-	Button exit = Button(&exitDst, "EXIT", &buttonManager);
+	SDL_Rect exitDst;
+	Button* exit;
 };

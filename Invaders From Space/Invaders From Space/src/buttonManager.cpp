@@ -40,5 +40,19 @@ void ButtonManager::moveDown() {
 }
 
 void ButtonManager::select() {
-
+	switch (currentIndex)
+	{
+	case play:
+		break;
+	case hiscores:
+		break;
+	case options:
+		break;
+	case exit:
+		MainMenu::isRunning = false;
+		Game::isRunning = false;
+		break;
+	default:
+		break;
+	}
 }
