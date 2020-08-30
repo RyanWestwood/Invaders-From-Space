@@ -2,7 +2,9 @@
 
 bool MainMenu::isRunning = false;
 
-MainMenu::MainMenu() {
+
+MainMenu::MainMenu(Game* game) {
+	this->game = game;
 	isRunning = true;
 	space = TextureManager::loadTexture("space.png");
 	spaceSrc = TextureManager::loadTextureRect("space.png");
@@ -24,7 +26,7 @@ MainMenu::MainMenu() {
 	logoSrc = TextureManager::loadTextureRect("logo.png");
 	logoDst = { 50,50, 486, 213 };
 
-	buttonManager = new ButtonManager();
+	buttonManager = new ButtonManager(game);
 
 	playDst = { 138, 363, 300, 100 };
 	play = new Button(&playDst, "PLAY", buttonManager);
@@ -38,7 +40,7 @@ MainMenu::MainMenu() {
 	exitDst = { 138, 813, 300, 100 };
 	exit = new Button(&exitDst, "EXIT", buttonManager);
 
-	buttonManager->setButtons();
+	buttonManager->setButtons(4);
 }
 
 MainMenu::~MainMenu() {
@@ -52,6 +54,7 @@ MainMenu::~MainMenu() {
 	border = nullptr;
 	TextureManager::clean(logo);
 	logo = nullptr;
+	delete buttonManager;
 	delete play;
 	delete hiscores;
 	delete options;
@@ -63,7 +66,8 @@ void MainMenu::input() {
 	{
 		if (Game::event.type == SDL_QUIT)
 		{
-			isRunning = false;
+			MainMenu::isRunning = false;
+			Game::isRunning = false;
 		}
 		else if (Game::event.type == SDL_KEYDOWN)
 		{
@@ -77,7 +81,31 @@ void MainMenu::input() {
 				buttonManager->moveDown();
 				break;
 			case SDLK_RETURN:
-				buttonManager->select();
+				switch (buttonManager->select())
+				{
+				case playScreen:
+					MainMenu::isRunning = false;
+					game->menuOptions = Game::menus::gameplay;
+					break;
+
+				case hiscoresScreen:
+					MainMenu::isRunning = false;
+					game->menuOptions = Game::menus::hiscores;
+					break;
+
+				case optionsScreen:
+					MainMenu::isRunning = false;
+					game->menuOptions = Game::menus::options;
+					break;
+
+				case exitScreen:
+					MainMenu::isRunning = false;
+					Game::isRunning = false;
+					break;
+
+				default:
+					break;
+				}
 				break;
 
 			default:

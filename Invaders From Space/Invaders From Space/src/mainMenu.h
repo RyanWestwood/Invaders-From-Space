@@ -1,14 +1,18 @@
 #pragma once
 #include "macros.h"
 #include "buttonManager.h"
+#include "game.h"
 class Button;
 class ButtonManager;
+class Game;
+
 
 class MainMenu {
 public:
 	//TODO: change SDL_Rect to 2 std::array
 	//std::array<std::array<SDL_Rect, 9>, 7> saceDst;
-	MainMenu();
+	MainMenu(Game* game);
+
 	~MainMenu();
 
 	void input();
@@ -19,12 +23,17 @@ public:
 	void createLayer(int width, int height, int yOffset, SDL_Rect dst[9][16]);
 
 	static bool isRunning;
-	//bool isRunning() { return running; }
-	//void isRunning(bool value) { running = value; }
 
 private:
-	//bool running = true;
 
+	Game* game;
+	enum menuIndex {
+		playScreen,
+		hiscoresScreen,
+		optionsScreen,
+		exitScreen
+	};
+	menuIndex test;
 	//	Width height in tiles.
 	//	9,	16.
 
@@ -41,7 +50,7 @@ private:
 	// 7 
 	SDL_Texture* cover = nullptr;
 	SDL_Rect coverSrc;
-	std::array<std::array<SDL_Rect, 9>, 7> test;
+	//std::array<std::array<SDL_Rect, 9>, 7> test;
 	SDL_Rect coverDst[9][16];
 
 	SDL_Texture* border = nullptr;

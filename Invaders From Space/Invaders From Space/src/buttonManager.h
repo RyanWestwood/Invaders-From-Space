@@ -1,19 +1,20 @@
 #pragma once
 #include "macros.h"
 #include "mainMenu.h"
+#include "game.h"
 class Button;
 class MainMenu;
+class Game;
 
 class ButtonManager {
 public:
-
-	ButtonManager();
+	ButtonManager(Game* game);
 	void addButton(Button* button);
 
-	void setButtons();
+	void setButtons(int noOfButtons);
 	void moveUp();
 	void moveDown();
-	void select();
+	int select();
 
 	void PrintArray(int size) {
 		for (int i = 0; i < size; i++)
@@ -23,14 +24,11 @@ public:
 	}
 
 private:
-	std::array<Button*, 64> buttons;
+	Game* game;
+	std::array<Button*, 16> buttons;
 	SDL_Color green = { 154,217,65,255 };
 	SDL_Color black = { 0, 0, 0, 255 };
-	enum menuIndex {
-		play, 
-		hiscores, 
-		options, 
-		exit
-	};
+	int noOfButtons;
 	int currentIndex;
+	int increment;
 };

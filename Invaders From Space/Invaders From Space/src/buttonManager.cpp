@@ -1,18 +1,21 @@
 #include "buttonManager.h"
 
-ButtonManager::ButtonManager() {
-	//	TODO: Make enter do things.
+ButtonManager::ButtonManager(Game* game) {
+	this->game = game;
 	currentIndex = 0;
+	increment = 0;
+	noOfButtons = 0;
+	for (auto& button : buttons) button = nullptr;
 }
 
 void ButtonManager::addButton(Button* button) {
-	static int increment = 0;
 	buttons[increment] = button;
 	increment++;
 }
 
-void ButtonManager::setButtons() {
-	for (int i = 0; i < 4; i++)
+void ButtonManager::setButtons(int noOfButtons) {
+	this->noOfButtons = noOfButtons;
+	for (int i = 0; i < noOfButtons; i++)
 	{
 		buttons[i]->setColor(black);
 	}
@@ -21,8 +24,8 @@ void ButtonManager::setButtons() {
 
 void ButtonManager::moveUp() {
 	currentIndex--;
-	if (currentIndex < 0) currentIndex = 3;
-	for (int i = 0; i < 4; i++)
+	if (currentIndex < 0) currentIndex = noOfButtons-1;
+	for (int i = 0; i < noOfButtons; i++)
 	{
 		buttons[i]->setColor(black);
 	}
@@ -31,28 +34,14 @@ void ButtonManager::moveUp() {
 
 void ButtonManager::moveDown() {
 	currentIndex++;
-	if (currentIndex > 3) currentIndex = 0;
-	for (int i = 0; i < 4; i++)
+	if (currentIndex > noOfButtons-1) currentIndex = 0;
+	for (int i = 0; i < noOfButtons; i++)
 	{
 		buttons[i]->setColor(black);
 	}
 	buttons[currentIndex]->setColor(green);
 }
 
-void ButtonManager::select() {
-	switch (currentIndex)
-	{
-	case play:
-		break;
-	case hiscores:
-		break;
-	case options:
-		break;
-	case exit:
-		MainMenu::isRunning = false;
-		Game::isRunning = false;
-		break;
-	default:
-		break;
-	}
+int ButtonManager::select() {
+	return currentIndex;
 }

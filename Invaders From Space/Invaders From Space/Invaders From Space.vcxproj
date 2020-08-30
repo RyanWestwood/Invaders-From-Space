@@ -163,6 +163,8 @@
     <ClCompile Include="src\buttonManager.cpp" />
     <ClCompile Include="src\fontManager.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\gameloop.cpp" />
+    <ClCompile Include="src\hiscores.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenu.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
@@ -173,6 +175,8 @@
     <ClInclude Include="src\buttonManager.h" />
     <ClInclude Include="src\fontManager.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gameloop.h" />
+    <ClInclude Include="src\hiscores.h" />
     <ClInclude Include="src\macros.h" />
     <ClInclude Include="src\mainMenu.h" />
     <ClInclude Include="src\soundManager.h" />

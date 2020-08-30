@@ -1,8 +1,8 @@
 #pragma once
 #include "macros.h"
-#include "soundManager.h"
-#include "textureManager.h"
-#include "fontManager.h"
+#include "mainMenu.h"
+#include "hiscores.h"
+#include "gameloop.h"
 
 class Game {
 public: 
@@ -15,10 +15,11 @@ public:
 	static bool isRunning;
 
 	// TODO: Figure out how to correctly make a static enum.
-	enum menus{
+	enum menus {
 		mainmenu,
-		gameplay, 
+		gameplay,
 		hiscores,
+		options
 	};
 	menus menuOptions;
 

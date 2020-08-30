@@ -1,5 +1,5 @@
 #include "game.h"
-#include "mainMenu.h"
+
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
@@ -56,7 +56,7 @@ bool Game::init() {
 }
 
 Game::Game() {
-	menuOptions = mainmenu;
+	menuOptions = Game::menus::mainmenu;
 }
 
 void Game::start() {
@@ -65,8 +65,8 @@ void Game::start() {
 		{
 		case mainmenu:
 		{
-			// Do main menu
-			MainMenu mainMenu = MainMenu();
+			Print("MainMenu");
+			MainMenu mainMenu = MainMenu(this);
 			while (mainMenu.isRunning) {
 				mainMenu.input();
 				mainMenu.update();
@@ -76,12 +76,36 @@ void Game::start() {
 		}
 		case gameplay:
 		{
+			Print("GamePlay");
+			GameLoop gameloop = GameLoop();
+			while (gameloop.isRunning) {
+				gameloop.input();
+				gameloop.update();
+				gameloop.draw();
+			}
 			//	Do Gameplay
 			break;
 		}
 		case hiscores:
 		{
-			//	Do hiscores
+			Print("HiScores");
+			Hiscores hiScores = Hiscores(this);
+			while (hiScores.isRunning) {
+				hiScores.input();
+				hiScores.update();
+				hiScores.draw();
+			}
+			break;
+		}
+		case options:
+		{
+			Print("Options");
+			//Hiscores hiScores = Hiscores(this);
+			//while (hiScores.isRunning) {
+			//	hiScores.input();
+			//	hiScores.update();
+			//	hiScores.draw();
+			//}
 			break;
 		}
 		default:
