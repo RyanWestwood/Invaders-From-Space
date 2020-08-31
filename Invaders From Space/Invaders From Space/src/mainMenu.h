@@ -6,7 +6,6 @@ class Button;
 class ButtonManager;
 class Game;
 
-
 class MainMenu {
 public:
 	//TODO: change SDL_Rect to 2 std::array

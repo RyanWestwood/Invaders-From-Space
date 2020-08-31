@@ -70,6 +70,7 @@ void Game::start() {
 				mainMenu.input();
 				mainMenu.update();
 				mainMenu.draw();
+				SDL_Delay(16);
 			}
 			break;
 		}
@@ -80,6 +81,7 @@ void Game::start() {
 				gameloop.input();
 				gameloop.update();
 				gameloop.draw();
+				SDL_Delay(16);
 			}
 			break;
 		}
@@ -90,6 +92,7 @@ void Game::start() {
 				hiScores.input();
 				hiScores.update();
 				hiScores.draw();
+				SDL_Delay(16);
 			}
 			break;
 		}
@@ -100,6 +103,7 @@ void Game::start() {
 				option.input();
 				option.update();
 				option.draw();
+				SDL_Delay(16);
 			}
 			break;
 		}

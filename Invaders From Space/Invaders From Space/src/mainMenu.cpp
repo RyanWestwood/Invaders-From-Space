@@ -60,6 +60,7 @@ MainMenu::~MainMenu() {
 	delete hiscores;
 	delete options;
 	delete exit;
+	game = nullptr;
 }
 
 void MainMenu::input() {

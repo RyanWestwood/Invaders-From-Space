@@ -1,8 +1,8 @@
 #include "buttonManager.h"
 
-ButtonManager::ButtonManager(Game* game) {
+ButtonManager::ButtonManager(Game* game, int index) {
 	this->game = game;
-	currentIndex = 0;
+	currentIndex = index;
 	increment = 0;
 	noOfButtons = 0;
 	for (auto& button : buttons) button = nullptr;

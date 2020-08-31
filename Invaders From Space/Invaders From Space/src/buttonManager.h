@@ -8,7 +8,7 @@ class Game;
 
 class ButtonManager {
 public:
-	ButtonManager(Game* game);
+	ButtonManager(Game* game, int index = 0);
 	void addButton(Button* button);
 
 	void setButtons(int noOfButtons);

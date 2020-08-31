@@ -43,12 +43,18 @@ Options::Options(Game* game) {
 
 Options::~Options() {
 	SDL_DestroyTexture(space);
+	space = nullptr;
 	SDL_DestroyTexture(building);
+	building = nullptr;
 	SDL_DestroyTexture(cover);
+	cover = nullptr;
 	SDL_DestroyTexture(border);
+	border = nullptr;
 	TTF_CloseFont(font);
+	font = nullptr;
 	delete buttonManager;
 	delete enter;
+	game = nullptr;
 }
 
 void Options::input() {

@@ -15,7 +15,6 @@ public:
 	static SDL_Event event;
 	static bool isRunning;
 
-	// TODO: Figure out how to correctly make a static enum.
 	enum menus {
 		mainmenu,
 		gameplay,

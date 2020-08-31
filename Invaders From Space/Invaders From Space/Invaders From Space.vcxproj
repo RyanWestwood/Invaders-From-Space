@@ -159,8 +159,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\barrier.cpp" />
+    <ClCompile Include="src\bullet.cpp" />
     <ClCompile Include="src\button.cpp" />
     <ClCompile Include="src\buttonManager.cpp" />
+    <ClCompile Include="src\enemy.cpp" />
     <ClCompile Include="src\fontManager.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\gameloop.cpp" />
@@ -168,12 +171,16 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenu.cpp" />
     <ClCompile Include="src\options.cpp" />
+    <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\barrier.h" />
+    <ClInclude Include="src\bullet.h" />
     <ClInclude Include="src\button.h" />
     <ClInclude Include="src\buttonManager.h" />
+    <ClInclude Include="src\enemy.h" />
     <ClInclude Include="src\fontManager.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameloop.h" />
@@ -181,6 +188,7 @@
     <ClInclude Include="src\macros.h" />
     <ClInclude Include="src\mainMenu.h" />
     <ClInclude Include="src\options.h" />
+    <ClInclude Include="src\player.h" />
     <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\test.h" />
     <ClInclude Include="src\textureManager.h" />
