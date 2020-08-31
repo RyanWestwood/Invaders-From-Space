@@ -1,4 +1,4 @@
-# Invaders-From-Space
+# Invaders-From-Space  
   
 ## Libraries used:
 **SDL2-2.0.12** - https://www.libsdl.org/download-2.0.php  
@@ -7,9 +7,22 @@
 **SDL2_mixer2.0.4** - https://www.libsdl.org/projects/SDL_mixer/  
   
 All libraries should be located in C:\dev\  
-    
+  
 ## Assets used:
 **Images (Comp 3 Interactive)** - https://comp3interactive.itch.io/invaders-from-outerspace-full-project-asset-pack  
 **Sounds (SubspaceAudio)** - https://opengameart.org/content/512-sound-effects-8-bit-style  
-**Fonts (Dale Harris)** - https://www.1001fonts.com/pixel-font.html#license
+**Fonts (Dale Harris)** - https://www.1001fonts.com/pixel-font.html#license  
   
+## .dll 
+**libfreetype-6.dll**  
+**libjpeg-9.dll**  
+**libpng16-16.dll**  
+**SDL2.dll**  
+**SDL2_image.dll**  
+**SDL2_mixer.dll**  
+**SDL2_ttf.dll**  
+**zlib1.dll**  
+  
+c:\..\Invaders-From-Space-master\Invaders From Space\Invaders From Space  
+Should have all the above .dll's  
+
