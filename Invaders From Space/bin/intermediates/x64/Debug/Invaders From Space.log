@@ -1,3 +1,19 @@
-﻿  player.cpp
-C:\Users\RyanW\Documents\Work\GitHub\Portfolio\Invaders-From-Space\Invaders From Space\Invaders From Space\src\player.cpp(41,37): warning C4018: '>': signed/unsigned mismatch
+﻿  TextureManager.cpp
+  barrier.cpp
+  bullet.cpp
+  button.cpp
+  buttonManager.cpp
+  collision.cpp
+  enemy.cpp
+  fontManager.cpp
+  game.cpp
+  gameloop.cpp
+  hiscores.cpp
+  main.cpp
+  mainMenu.cpp
+  options.cpp
+  player.cpp
+C:\Users\RyanW\Documents\Work\GitHub\Portfolio\Invaders-From-Space\Invaders From Space\Invaders From Space\src\player.cpp(42,37): warning C4018: '>': signed/unsigned mismatch
+  soundManager.cpp
+  Generating Code...
   Invaders From Space.vcxproj -> C:\Users\RyanW\Documents\Work\GitHub\Portfolio\Invaders-From-Space\Invaders From Space\bin\x64\Debug\Invaders From Space.exe

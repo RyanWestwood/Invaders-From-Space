@@ -7,17 +7,21 @@ class Player;
 
 class BulletManager {
 public:
-	BulletManager(Player* player);
+	BulletManager();
 	~BulletManager();
 
 	void update();
 	void draw();
 
-	void shoot();
+	void shoot(int xPos);
 	void offScreen();
 
+	std::vector<Bullet*>& getBullets();
+	void bulletHit(Bullet* bullet);
+	void print();
+
+
 private:
-	Player* player;
 	std::vector<Bullet*> bullets;
 
 };
@@ -30,9 +34,14 @@ public:
 	void update();
 	void draw();
 
+	SDL_Rect* getBulletRect();
+
 private:
 	BulletManager* bulletManager;
+
 	SDL_Texture* bulletTexture;
 	SDL_Rect bulletSrc;
 	SDL_Rect bulletPos;
+
+	SDL_Rect bulletCollider;
 };

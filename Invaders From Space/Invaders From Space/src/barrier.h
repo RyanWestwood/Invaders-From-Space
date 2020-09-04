@@ -12,8 +12,10 @@ public:
 	void draw();
 	void spawnBarriers();
 
+	std::vector<Barrier*>& getBarriers();
+
 private:
-	std::array<Barrier*, 4> barriers;
+	std::vector<Barrier*> barriers;
 };
 
 class Barrier {
@@ -23,8 +25,13 @@ public:
 
 	void draw();
 
+	SDL_Rect* getBarrierRect();
+
 private:
 	SDL_Texture* barrierTexture;
 	SDL_Rect barrierSrc;
 	SDL_Rect barrierPos;
+
+	SDL_Rect barrierCollider;
+
 };

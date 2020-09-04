@@ -1,14 +1,14 @@
 #include "player.h"
 
-Player::Player(Game* game) {
+Player::Player(Game* game, BulletManager* bulletManager) {
 	this->game = game;
+	this->bulletManager = bulletManager;
 
 	playerTexture = TextureManager::loadTexture("player.png");
 	playerSrc = TextureManager::loadTextureRect("player.png");
 	playerSrc.w = 16;
 	playerPos = { 256, 832, playerSrc.w * 4, playerSrc.h * 4 };
 
-	bulletManager = new BulletManager(this);
 }
 
 Player::~Player() {
@@ -37,24 +37,25 @@ void Player::input() {
 			case SDLK_RIGHT:
 				velocity = 1;
 				break;
+
 			case SDLK_SPACE:
 				if ((SDL_GetTicks() - lastShot) > fireRateDelay)
 				{
-					bulletManager->shoot();
+					bulletManager->shoot(playerPos.x);
 					lastShot = SDL_GetTicks();
 				}
 				break;
 
 #if DEBUG == 1
 			case SDLK_w:
-				////	Exits game
-				//GameLoop::isRunning = false;
-				//Game::isRunning = false;
+				//	Exits game
+				GameLoop::isRunning = false;
+				Game::isRunning = false;
 
 				break;
 			case SDLK_q:
-				/*GameLoop::isRunning = false;
-				game->menuOptions = Game::menus::mainmenu;*/
+				GameLoop::isRunning = false;
+				game->menuOptions = Game::menus::mainmenu;
 				break;
 
 			case SDLK_e:
@@ -121,4 +122,12 @@ void Player::loseHealth(int damageAmount) {
 void Player::loseLife(int _livesLost) {
 	lives -= _livesLost;
 	//ui->lives(lives);
+}
+
+SDL_Rect* Player::getPlayerRect() {
+	return &playerPos;
+}
+
+void Player::setVelocity(int velocity) {
+	this->velocity = velocity;
 }

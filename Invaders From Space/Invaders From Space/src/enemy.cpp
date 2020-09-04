@@ -1,7 +1,7 @@
 #include "enemy.h"
 
 EnemyManager::EnemyManager() {
-	for (auto& enemy : enemies) enemy = nullptr;
+	//for (auto& enemy : enemies) enemy = nullptr;
 	left = true;
 	right = false;
 }
@@ -48,22 +48,34 @@ void EnemyManager::draw() {
 
 }
 
-//void EnemyManager::addEnemy(Enemy* enemy) {
-//	enemies[enemyIndex] = enemy;
-//	enemyIndex++;
-//}
-
 void EnemyManager::spawnWave() {
-	int count = 0;
 	for (int x = 0; x < 7; x++)
 	{
 		for (int y = 0; y < 5; y++)
 		{
 			SDL_Rect pos = { 64 + (x * 64), 192 + (y * 64), 64, 64 };
-			enemies[count] = new Enemy(pos);
-			count++;
+			enemies.push_back(new Enemy(pos));
 		}
 	}
+}
+
+std::vector<Enemy*>& EnemyManager::getEnemies() {
+	return enemies;
+}
+
+void EnemyManager::enemyHit(Enemy* enemy)
+{
+	//print();
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		if (enemies[i] == enemy) {
+			delete enemies[i];
+			enemies[i] = nullptr;
+			enemies.erase(enemies.begin() + i);
+			break;
+		}
+	}
+	//print();
 }
 
 //=============================
@@ -73,6 +85,7 @@ Enemy::Enemy(SDL_Rect startPos) {
 	enemySrc1 = { 0,0, 16, 16 };
 	enemySrc2 = { 16,0, 16, 16 };
 	enemyPos = { startPos.x, startPos.y, enemySrc1.w * 4, enemySrc1.h * 4 };
+	enemyCollider = { startPos.x+8, startPos.y+12, 44, 32 };
 }
 
 Enemy::~Enemy() {
@@ -87,9 +100,11 @@ void Enemy::update(int whichWayToMove) {
 	//	0 Left, 1 Right.
 	if (whichWayToMove == 0) {
 		enemyPos.x -= 1;
+		enemyCollider.x -= 1;
 	}
 	else if (whichWayToMove == 1) {
 		enemyPos.x += 1;
+		enemyCollider.x += 1;
 	}
 }
 void Enemy::draw(int anim) {
@@ -99,4 +114,8 @@ void Enemy::draw(int anim) {
 	else {
 		TextureManager::draw(enemySprite, &enemySrc2, &enemyPos);
 	}
+}
+
+SDL_Rect* Enemy::getEnemyRect() {
+	return &enemyCollider;
 }

@@ -7,7 +7,7 @@ class BulletManager;
 
 class Player {
 public:
-	Player(Game* game);
+	Player(Game* game, BulletManager* bulletManager);
 	~Player();
 
 	void input();
@@ -17,10 +17,13 @@ public:
 	void loseHealth(int damageAmount = 1);
 	void loseLife(int livesLost);
 
-	int playerX() { return static_cast<int>(playerPos.x); }
+	void setVelocity(int velocity);
+
+	SDL_Rect* getPlayerRect();
 
 private:
 	Game* game;
+	BulletManager* bulletManager;
 
 	SDL_Texture* playerTexture;
 	SDL_Rect playerSrc;
@@ -32,13 +35,10 @@ private:
 	int speed = 5;
 	int velocity = 0;
 
-	BulletManager* bulletManager;
-
-
 	//	Test
 	std::list<int> temp;
 
-	int fireRateDelay = 400;
+	int fireRateDelay = 100;
 	int lastShot = 0;
 
 

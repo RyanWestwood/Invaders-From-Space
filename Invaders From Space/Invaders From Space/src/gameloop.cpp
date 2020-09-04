@@ -31,8 +31,9 @@ GameLoop::GameLoop(Game* game) {
 	barrierManager = new BarrierManager();
 	barrierManager->spawnBarriers();
 
+	bulletManager = new BulletManager();
 	//	Player
-	player = new Player(game);
+	player = new Player(game, bulletManager);
 
 }
 
@@ -53,14 +54,65 @@ GameLoop::~GameLoop() {
 }
 
 void GameLoop::input() {
+
+	//TODO: Remove debug s
+	if (Game::event.type == SDL_QUIT)
+	{
+		GameLoop::isRunning = false;
+		Game::isRunning = false;
+	}
 	player->input();
 }
 
 void GameLoop::update() {
 	enemyManager->update();
-
 	player->update();
+
+	auto& bulletColliders(bulletManager->getBullets());
+	auto& enemyColliders(enemyManager->getEnemies());
+	auto& barrierColliders(barrierManager->getBarriers());
+
+	//	TODO: Why does this not work while space is held down. but works if left/right is.
+	for (auto& bullet : bulletColliders) {
+		for (auto& enemy : enemyColliders) {
+			if (Collision::checkCollision(*bullet->getBulletRect(), *enemy->getEnemyRect())) {
+				//Print("ENEMY HIT");
+				enemyManager->enemyHit(enemy);
+				bulletManager->bulletHit(bullet);
+				goto br;
+			}
+
+		}
+		for (auto& barrier : barrierColliders) {
+			if (Collision::checkCollision(*bullet->getBulletRect(), *barrier->getBarrierRect())) {
+				//Print("BARRIER HIT");
+				bulletManager->bulletHit(bullet);
+				goto br;
+			}
+		}
+	br:
+		break;
+
+	}
 }
+
+//bool GameLoop::processInput() {
+//	while (SDL_PollEvent(&Game::event)) {
+//		if (Game::event.type == SDL_QUIT) {
+//			return false;
+//		}
+//		if (Game::event.type == SDL_KEYDOWN)
+//		{
+//			if (Game::event.key.keysym.scancode < 512);
+//		}
+//		if (Game::event.type == SDL_KEYUP)
+//		{
+//			if (Game::event.key.keysym.scancode < 512);
+//		}
+//	}
+//	return true;
+//}
+
 void GameLoop::draw() {
 	SDL_RenderClear(Game::renderer);
 

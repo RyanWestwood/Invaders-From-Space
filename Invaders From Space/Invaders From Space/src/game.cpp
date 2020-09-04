@@ -81,6 +81,7 @@ void Game::start() {
 				gameloop.input();
 				gameloop.update();
 				gameloop.draw();
+
 				SDL_Delay(16);
 			}
 			break;

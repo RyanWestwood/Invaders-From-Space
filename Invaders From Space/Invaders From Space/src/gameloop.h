@@ -3,11 +3,14 @@
 #include "enemy.h"
 #include "barrier.h"
 #include "player.h"
+#include "bullet.h"
+#include "collision.h"
 
 class Enemy;
 class EnemyManager;
 class BarrierManager;
 class Player;
+class BulletManager;
 
 
 class GameLoop {
@@ -24,6 +27,9 @@ public:
 	void drawLayer(int width, int height, SDL_Texture* texture, SDL_Rect src, SDL_Rect dst[9][16]);
 
 	static bool isRunning;
+
+	//	TODO: try this.
+	//bool processInput();
 
 private:
 	Game* game;
@@ -61,5 +67,12 @@ private:
 
 	//	Player
 	Player* player;
+
+	//	Bullets
+	BulletManager* bulletManager;
+
+
+	int fireRateDelay = 100;
+	int lastShot = 0;
 
 };

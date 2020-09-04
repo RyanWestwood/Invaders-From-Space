@@ -1,11 +1,9 @@
 #include "bullet.h"
 
-BulletManager::BulletManager(Player* player) {
-	this->player = player;
+BulletManager::BulletManager() {
 }
 
 BulletManager::~BulletManager() {
-	player = nullptr;
 	for (int element = 0; element < bullets.size(); element++)
 	{
 		delete bullets[element];
@@ -30,8 +28,8 @@ void BulletManager::draw() {
 	}
 }
 
-void BulletManager::shoot() {
-	bullets.insert(bullets.begin(), new Bullet(player->playerX(), this));
+void BulletManager::shoot(int xPos) {
+	bullets.insert(bullets.begin(), new Bullet(xPos, this));
 }
 
 void BulletManager::offScreen() {
@@ -42,6 +40,25 @@ void BulletManager::offScreen() {
 	}
 }
 
+std::vector<Bullet*>& BulletManager::getBullets() {
+	return bullets;
+}
+
+void BulletManager::bulletHit(Bullet* item)
+{
+	//print();
+	for (int i = 0; i < bullets.size(); i++)
+	{
+		if (bullets[i] == item) {
+			delete bullets[i];
+			bullets[i] = nullptr;
+			bullets.erase(bullets.begin() + i);
+			break;
+		}
+	}
+	//print();
+}
+
 //==================================
 
 Bullet::Bullet(int pos, BulletManager* bulletManager) {
@@ -50,6 +67,7 @@ Bullet::Bullet(int pos, BulletManager* bulletManager) {
 	bulletSrc = TextureManager::loadTextureRect("playerBullet.png");
 	bulletSrc.h = 16;
 	bulletPos = { pos, 832, bulletSrc.w * 4, bulletSrc.h * 4 };
+	bulletCollider = { pos + 28, 832 + 12, 4, 24 };
 }
 
 Bullet::~Bullet() {
@@ -59,8 +77,9 @@ Bullet::~Bullet() {
 }
 
 void Bullet::update() {
-	bulletPos.y -= 5;
-	if (bulletPos.y < 150) {
+	bulletPos.y -= 10;
+	bulletCollider.y -= 10;
+	if (bulletPos.y < 110) {
 		bulletManager->offScreen();
 	}
 }
@@ -68,3 +87,8 @@ void Bullet::update() {
 void Bullet::draw() {
 	TextureManager::draw(bulletTexture, &bulletSrc, &bulletPos);
 }
+
+SDL_Rect* Bullet::getBulletRect() {
+	return &bulletCollider;
+}
+

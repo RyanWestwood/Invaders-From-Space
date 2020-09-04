@@ -12,12 +12,15 @@ public:
 	void update();
 	void draw();
 
-	//void addEnemy(Enemy* enemy);
 	void spawnWave();
+
+	std::vector<Enemy*>& getEnemies();
+	void enemyHit(Enemy* enemy);
+
 private:
 	//	7, 5
 	int enemyIndex = 0;
-	std::array<Enemy*, 35> enemies;
+	std::vector<Enemy*> enemies;
 
 	//	TODO: make this spawn different sprites and anim.
 	//std::array<SDL_Texture*, 10> sprites;
@@ -37,10 +40,15 @@ public:
 
 	int xPos() { return enemyPos.x; }
 
+	SDL_Rect* getEnemyRect();
+
 private:
 	SDL_Texture* enemySprite;
 	SDL_Rect enemySrc1;
 	SDL_Rect enemySrc2;
 	//	Have a seperate box collider?
 	SDL_Rect enemyPos;
+
+	//	Collision box;
+	SDL_Rect enemyCollider;
 };

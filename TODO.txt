@@ -1,0 +1,9 @@
+Finish gameplay. 
+Add UI.
+ADd sounds.
+link score to file sysem.
+
+FIX:
+enemies running out crash.
+enemy moving left but not right after column destroyed. 
+keyboard input voiding collision.

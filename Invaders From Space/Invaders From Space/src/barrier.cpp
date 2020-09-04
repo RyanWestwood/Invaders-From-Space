@@ -21,8 +21,12 @@ void BarrierManager::spawnBarriers() {
 	for (int i = 0; i < 4; i++)
 	{
 		SDL_Rect pos = { 64 + (i * 128), 704, 0,0 };
-		barriers[i] = new Barrier(&pos);
+		barriers.push_back(new Barrier(&pos));
 	}
+}
+
+std::vector<Barrier*>& BarrierManager::getBarriers() {
+	return barriers;
 }
 
 //==============================
@@ -32,6 +36,7 @@ Barrier::Barrier(SDL_Rect* startPos) {
 	barrierSrc = TextureManager::loadTextureRect("barrier.png");
 	barrierSrc.h = barrierSrc.h / 4;
 	barrierPos = { startPos->x, startPos->y, barrierSrc.w * 2,barrierSrc.h * 2 };
+	barrierCollider = { startPos->x+12, startPos->y+8, 52, 24 };
 }
 
 Barrier::~Barrier() {
@@ -41,4 +46,8 @@ Barrier::~Barrier() {
 
 void Barrier::draw() {
 	TextureManager::draw(barrierTexture, &barrierSrc, &barrierPos);
+}
+
+SDL_Rect* Barrier::getBarrierRect() {
+	return &barrierCollider;
 }
