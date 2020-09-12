@@ -12,7 +12,8 @@ class BarrierManager;
 class Player;
 class BulletManager;
 
-
+//	TODO: use inheritance to print background?
+//	TODO: move player ui to player class?
 class GameLoop {
 public:
 
@@ -28,8 +29,8 @@ public:
 
 	static bool isRunning;
 
-	//	TODO: try this.
-	//bool processInput();
+	void increaseScore(int scoreAmount = 5);
+
 
 private:
 	Game* game;
@@ -52,9 +53,24 @@ private:
 	std::array<SDL_Rect, 9> borderBannerSrc;
 	std::array<SDL_Rect, 9> borderBannerDst;
 
+	//	UI.
+	SDL_Texture* health = nullptr;
+	SDL_Rect healthSrc;
+	SDL_Rect healthDst;
+
+	SDL_Texture* lives = nullptr;
+	SDL_Rect livesSrc;
+	SDL_Rect livesDst[3];
+
+	const char* livesString = "LIVES";
+	const char* healthString = "HEALTH";
+	const char* scoreString = "SCORE";
+	std::string scoreStringInt = "000000";
+	int score = 0;
+
+
 	//	Fonts
 	TTF_Font* font = nullptr;
-	const char* message;
 	SDL_Rect titlePos;
 	SDL_Rect borderSize = { 25, 25, 526, 100 };
 	SDL_Color color = { 154,217,65,255 };
@@ -70,7 +86,6 @@ private:
 
 	//	Bullets
 	BulletManager* bulletManager;
-
 
 	int fireRateDelay = 100;
 	int lastShot = 0;

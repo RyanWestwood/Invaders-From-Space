@@ -23,6 +23,27 @@ GameLoop::GameLoop(Game* game) {
 	borderBannerSrc = TextureManager::nineClipSrc(3, 48, 48);
 	borderBannerDst = TextureManager::nineClipDst(25, 25, 526, 100, 3);
 
+	//	UI. TODO: could use template take reference of variables? to make single functions
+	//	Health
+	//change .y for health.
+	health = TextureManager::loadTexture("health.png");
+	healthSrc = TextureManager::loadTextureRect("health.png"); //32, 16
+	healthSrc.h = 16;
+	healthDst = { 54,59, healthSrc.w * 4, healthSrc.h* 4 };
+
+	//	Text.
+	font = FontManager::loadFont("Pixel.ttf", 20);
+
+	//	Lives
+	//	change .x for lives.
+	lives = TextureManager::loadTexture("player.png");
+	livesSrc = TextureManager::loadTextureRect("player.png"); //16, 16
+	livesSrc.w = 16;
+	for (int i = 0; i < 3; i++)
+	{
+		livesDst[i] = { 211 + (i * 48),59, livesSrc.w * 4, livesSrc.h * 4 };
+	}
+
 	//	Enemy
 	enemyManager = new EnemyManager();
 	enemyManager->spawnWave();
@@ -46,6 +67,8 @@ GameLoop::~GameLoop() {
 	cover = nullptr;
 	SDL_DestroyTexture(border);
 	border = nullptr;
+	SDL_DestroyTexture(health);
+	health = nullptr;
 	TTF_CloseFont(font);
 	font = nullptr;
 	delete enemyManager;
@@ -76,16 +99,15 @@ void GameLoop::update() {
 	for (auto& bullet : bulletColliders) {
 		for (auto& enemy : enemyColliders) {
 			if (Collision::checkCollision(*bullet->getBulletRect(), *enemy->getEnemyRect())) {
-				//Print("ENEMY HIT");
 				enemyManager->enemyHit(enemy);
 				bulletManager->bulletHit(bullet);
+				increaseScore();
 				goto br;
 			}
 
 		}
 		for (auto& barrier : barrierColliders) {
 			if (Collision::checkCollision(*bullet->getBulletRect(), *barrier->getBarrierRect())) {
-				//Print("BARRIER HIT");
 				bulletManager->bulletHit(bullet);
 				goto br;
 			}
@@ -96,23 +118,6 @@ void GameLoop::update() {
 	}
 }
 
-//bool GameLoop::processInput() {
-//	while (SDL_PollEvent(&Game::event)) {
-//		if (Game::event.type == SDL_QUIT) {
-//			return false;
-//		}
-//		if (Game::event.type == SDL_KEYDOWN)
-//		{
-//			if (Game::event.key.keysym.scancode < 512);
-//		}
-//		if (Game::event.type == SDL_KEYUP)
-//		{
-//			if (Game::event.key.keysym.scancode < 512);
-//		}
-//	}
-//	return true;
-//}
-
 void GameLoop::draw() {
 	SDL_RenderClear(Game::renderer);
 
@@ -122,6 +127,18 @@ void GameLoop::draw() {
 	drawLayer(9, 7, cover, coverSrc, coverDst);
 	TextureManager::drawNine(border, borderBannerSrc, borderBannerDst);
 
+	//	UI
+	TextureManager::draw(health, &healthSrc, &healthDst);
+	for (int i = 0; i < 3; i++)
+	{
+		TextureManager::draw(lives, &livesSrc, &livesDst[i]);
+	}
+
+	FontManager::drawFont(font, healthString, 65, 42, &color);
+	FontManager::drawFont(font, livesString, 255, 42, &color);
+	FontManager::drawFont(font, scoreString, 419, 42, &color);
+	FontManager::drawFont(font, scoreStringInt.data(), 408, 82, &color);
+
 	//	Enemy.
 	enemyManager->draw();
 
@@ -130,6 +147,8 @@ void GameLoop::draw() {
 
 	//	Player
 	player->draw();
+
+	//UI.
 
 	SDL_RenderPresent(Game::renderer);
 }
@@ -151,4 +170,9 @@ void GameLoop::createLayer(int width, int height, int yOffset, SDL_Rect dst[9][1
 			dst[x][y] = { x * 64, yOffset + y * 64, 64, 64 };
 		}
 	}
+}
+
+void GameLoop::increaseScore(int scoreAmount) {
+	score += scoreAmount;
+	scoreStringInt = std::string(6 - std::to_string(score).length(), '0') + std::to_string(score);
 }
