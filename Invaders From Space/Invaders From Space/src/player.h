@@ -29,14 +29,13 @@ private:
 	SDL_Rect playerSrc;
 	SDL_Rect playerPos;
 
+	Mix_Chunk* shotSFX;
+
 	int health = 5;
 	int lives = 3;
 
 	int speed = 5;
 	int velocity = 0;
-
-	//	Test
-	std::list<int> temp;
 
 	int fireRateDelay = 100;
 	int lastShot = 0;

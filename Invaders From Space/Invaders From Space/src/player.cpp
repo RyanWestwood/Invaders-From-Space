@@ -4,6 +4,8 @@ Player::Player(Game* game, BulletManager* bulletManager) {
 	this->game = game;
 	this->bulletManager = bulletManager;
 
+	shotSFX = SoundManager::loadSFX("shot.wav");
+
 	playerTexture = TextureManager::loadTexture("player.png");
 	playerSrc = TextureManager::loadTextureRect("player.png");
 	playerSrc.w = 16;
@@ -14,6 +16,8 @@ Player::Player(Game* game, BulletManager* bulletManager) {
 Player::~Player() {
 	SDL_DestroyTexture(playerTexture);
 	playerTexture = nullptr;
+	Mix_FreeChunk(shotSFX);
+	shotSFX = nullptr;
 	game = nullptr;
 }
 
@@ -42,6 +46,7 @@ void Player::input() {
 				if ((SDL_GetTicks() - lastShot) > fireRateDelay)
 				{
 					bulletManager->shoot(playerPos.x);
+					SoundManager::playSFX(shotSFX);
 					lastShot = SDL_GetTicks();
 				}
 				break;

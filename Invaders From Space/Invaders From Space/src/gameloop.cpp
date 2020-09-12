@@ -23,9 +23,7 @@ GameLoop::GameLoop(Game* game) {
 	borderBannerSrc = TextureManager::nineClipSrc(3, 48, 48);
 	borderBannerDst = TextureManager::nineClipDst(25, 25, 526, 100, 3);
 
-	//	UI. TODO: could use template take reference of variables? to make single functions
 	//	Health
-	//change .y for health.
 	health = TextureManager::loadTexture("health.png");
 	healthSrc = TextureManager::loadTextureRect("health.png"); //32, 16
 	healthSrc.h = 16;
@@ -35,7 +33,6 @@ GameLoop::GameLoop(Game* game) {
 	font = FontManager::loadFont("Pixel.ttf", 20);
 
 	//	Lives
-	//	change .x for lives.
 	lives = TextureManager::loadTexture("player.png");
 	for (int i = 0; i < 3; i++)
 	{
@@ -43,6 +40,10 @@ GameLoop::GameLoop(Game* game) {
 		livesSrc[i].w = 16;
 		livesDst[i] = { 211 + (i * 48),59, livesSrc[i].w * 4, livesSrc[i].h * 4 };
 	}
+
+	//	Sounds
+	music = SoundManager::loadMusic("music.wav");
+	SoundManager::playMusic(music);
 
 	//	Enemy
 	enemyManager = new EnemyManager();
@@ -71,6 +72,8 @@ GameLoop::~GameLoop() {
 	health = nullptr;
 	TTF_CloseFont(font);
 	font = nullptr;
+	Mix_FreeMusic(music);
+	music = nullptr;
 	delete enemyManager;
 	delete barrierManager;
 	delete player;

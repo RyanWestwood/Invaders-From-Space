@@ -76,6 +76,9 @@ private:
 	SDL_Rect borderSize = { 25, 25, 526, 100 };
 	SDL_Color color = { 154,217,65,255 };
 
+	//	Sounds	
+	Mix_Music* music;
+
 	//	Enemies
 	EnemyManager* enemyManager;
 	
