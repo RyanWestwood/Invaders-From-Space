@@ -17,6 +17,8 @@ public:
 	std::vector<Enemy*>& getEnemies();
 	void enemyHit(Enemy* enemy);
 
+	int getRight();
+
 private:
 	//	7, 5
 	int enemyIndex = 0;

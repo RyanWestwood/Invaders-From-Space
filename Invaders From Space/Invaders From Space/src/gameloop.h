@@ -30,7 +30,8 @@ public:
 	static bool isRunning;
 
 	void increaseScore(int scoreAmount = 5);
-
+	void loseHealth();
+	void loseLife();
 
 private:
 	Game* game;
@@ -59,7 +60,7 @@ private:
 	SDL_Rect healthDst;
 
 	SDL_Texture* lives = nullptr;
-	SDL_Rect livesSrc;
+	SDL_Rect livesSrc[3];
 	SDL_Rect livesDst[3];
 
 	const char* livesString = "LIVES";
@@ -89,5 +90,10 @@ private:
 
 	int fireRateDelay = 100;
 	int lastShot = 0;
+
+
+	//	DEBUG
+	int healthInt = 5;
+	int livesInt = 3;
 
 };

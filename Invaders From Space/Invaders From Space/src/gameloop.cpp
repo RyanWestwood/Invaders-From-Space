@@ -37,11 +37,11 @@ GameLoop::GameLoop(Game* game) {
 	//	Lives
 	//	change .x for lives.
 	lives = TextureManager::loadTexture("player.png");
-	livesSrc = TextureManager::loadTextureRect("player.png"); //16, 16
-	livesSrc.w = 16;
 	for (int i = 0; i < 3; i++)
 	{
-		livesDst[i] = { 211 + (i * 48),59, livesSrc.w * 4, livesSrc.h * 4 };
+		livesSrc[i] = TextureManager::loadTextureRect("player.png"); //16, 16
+		livesSrc[i].w = 16;
+		livesDst[i] = { 211 + (i * 48),59, livesSrc[i].w * 4, livesSrc[i].h * 4 };
 	}
 
 	//	Enemy
@@ -84,6 +84,12 @@ void GameLoop::input() {
 		GameLoop::isRunning = false;
 		Game::isRunning = false;
 	}
+	//if (Game::event.type == SDL_KEYDOWN)
+	//{
+	//	if (Game::event.key.keysym.sym == SDLK_LEFT) {
+	//		loseHealth();
+	//	}
+	//}
 	player->input();
 }
 
@@ -104,17 +110,16 @@ void GameLoop::update() {
 				increaseScore();
 				goto br;
 			}
-
 		}
 		for (auto& barrier : barrierColliders) {
 			if (Collision::checkCollision(*bullet->getBulletRect(), *barrier->getBarrierRect())) {
+				barrier->loseHealth();
 				bulletManager->bulletHit(bullet);
 				goto br;
 			}
 		}
 	br:
 		break;
-
 	}
 }
 
@@ -131,7 +136,7 @@ void GameLoop::draw() {
 	TextureManager::draw(health, &healthSrc, &healthDst);
 	for (int i = 0; i < 3; i++)
 	{
-		TextureManager::draw(lives, &livesSrc, &livesDst[i]);
+		TextureManager::draw(lives, &livesSrc[i], &livesDst[i]);
 	}
 
 	FontManager::drawFont(font, healthString, 65, 42, &color);
@@ -175,4 +180,37 @@ void GameLoop::createLayer(int width, int height, int yOffset, SDL_Rect dst[9][1
 void GameLoop::increaseScore(int scoreAmount) {
 	score += scoreAmount;
 	scoreStringInt = std::string(6 - std::to_string(score).length(), '0') + std::to_string(score);
+}
+
+void GameLoop::loseHealth() {
+	healthInt -= 1;
+	if (healthInt < 0) healthInt = 0;
+
+	if (healthInt == 5) healthSrc.y = 0;
+	if (healthInt == 4) healthSrc.y = 16;
+	if (healthInt == 3) healthSrc.y = 32;
+	if (healthInt == 2) healthSrc.y = 48;
+	if (healthInt == 1) healthSrc.y = 64;
+	if (healthInt == 0) {
+		healthSrc.y = 80;
+		if (livesInt == 0) {
+			//	TODO: Make the player die here.
+			GameLoop::isRunning = false;
+			Game::isRunning = false;
+		}
+		else {
+			loseLife();
+			healthInt = 5;
+			healthSrc.y = 0;
+		}
+	}
+
+}
+
+void GameLoop::loseLife() {
+	livesInt -= 1;
+	if (livesInt < 0) livesInt = 0;
+	if (livesInt == 2) livesSrc[2].x = 16;
+	if (livesInt == 1) livesSrc[1].x = 16;
+	if (livesInt == 0) livesSrc[0].x = 16;
 }

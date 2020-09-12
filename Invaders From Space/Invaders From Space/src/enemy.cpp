@@ -1,7 +1,6 @@
 #include "enemy.h"
 
 EnemyManager::EnemyManager() {
-	//for (auto& enemy : enemies) enemy = nullptr;
 	left = true;
 	right = false;
 }
@@ -13,26 +12,30 @@ EnemyManager::~EnemyManager() {
 void EnemyManager::input() {
 
 }
+
 void EnemyManager::update() {
-	if (enemies[0]->xPos() <= 0) {
-		right = true;
-		left = false;
-	}
-	if (enemies[0]->xPos() >= 128) {
-		right = false;
-		left = true;
-	}
-	for (auto& e : enemies) {
-		if (e != nullptr) {
-			if (left) {
-				e->update(0);
-			}
-			else if (right) {
-				e->update(1);
+	if (enemies.size() != 0) {
+		if (enemies[0]->xPos() <= 0) {
+			right = true;
+			left = false;
+		}
+		if (getRight() >= 512) {
+			right = false;
+			left = true;
+		}
+		for (auto& e : enemies) {
+			if (e != nullptr) {
+				if (left) {
+					e->update(0);
+				}
+				else if (right) {
+					e->update(1);
+				}
 			}
 		}
 	}
 }
+
 void EnemyManager::draw() {
 	for (auto& e : enemies) {
 		if (e != nullptr) {
@@ -45,7 +48,6 @@ void EnemyManager::draw() {
 			}
 		}
 	}
-
 }
 
 void EnemyManager::spawnWave() {
@@ -65,7 +67,6 @@ std::vector<Enemy*>& EnemyManager::getEnemies() {
 
 void EnemyManager::enemyHit(Enemy* enemy)
 {
-	//print();
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		if (enemies[i] == enemy) {
@@ -75,11 +76,19 @@ void EnemyManager::enemyHit(Enemy* enemy)
 			break;
 		}
 	}
-	//print();
+}
+
+int EnemyManager::getRight() {
+	int highest = 0;
+	for (auto enemy : enemies) {
+		if (enemy->xPos() > highest) highest = enemy->xPos();
+	}
+	return highest;
 }
 
 //=============================
 
+//	TODO: Make this like BarrierMAnager call delete from hit function.
 Enemy::Enemy(SDL_Rect startPos) {
 	enemySprite = TextureManager::loadTexture("enemy.png");
 	enemySrc1 = { 0,0, 16, 16 };
