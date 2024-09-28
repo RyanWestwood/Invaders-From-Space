@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.8)
-project(Carlos-Dungeon-Crusade VERSION 1.0)
+project(Space-Invaders VERSION 1.0)
 
 # Set the project properties
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
@@ -18,7 +18,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
         "${PROJECT_SOURCE_DIR}/library_binaries/lib/libSDL2_image.so"
         "${PROJECT_SOURCE_DIR}/library_binaries/lib/libSDL2_mixer.so"
         "${PROJECT_SOURCE_DIR}/library_binaries/lib/libSDL2_ttf.so"
-        "${PROJECT_SOURCE_DIR}/library_binaries/lib/libAIL.so"
     ) 
 endif()
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -31,7 +30,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
         "${PROJECT_SOURCE_DIR}/library_binaries/lib/SDL2_image.lib"
         "${PROJECT_SOURCE_DIR}/library_binaries/lib/SDL2_mixer.lib"
         "${PROJECT_SOURCE_DIR}/library_binaries/lib/SDL2_ttf.lib"
-        "${PROJECT_SOURCE_DIR}/library_binaries/lib/AIL.lib"
     ) 
 endif()
 
@@ -43,7 +41,7 @@ set(DESTINATIONS Release Debug MinSizeRel RelWithDebInfo)
 foreach(DEST ${DESTINATIONS})
   file(COPY ${DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/build/${DEST}")
 endforeach()
-file(GLOB AI "library_binaries/Debug/bin/AIL.dll")
+
 file(COPY ${AI} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/build/Debug)
 
 file(GLOB_RECURSE SOURCE "source/*.*")
