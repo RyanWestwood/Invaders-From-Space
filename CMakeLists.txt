@@ -36,14 +36,32 @@ endif()
 # Include the correct directories
 include_directories(${PROJECT_SOURCE_DIR}/library_binaries/include)
 
+# Copy the required dll's 
 file(GLOB DLLS "library_binaries/bin/*.dll")
 set(DESTINATIONS Release Debug MinSizeRel RelWithDebInfo)
 foreach(DEST ${DESTINATIONS})
   file(COPY ${DLLS} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/build/${DEST}")
 endforeach()
 
-file(COPY ${AI} DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/build/Debug)
+# Copy assets to build directory
+set(ASSETS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets")
+set(BUILD_ASSETS_DIR "${CMAKE_CURRENT_BINARY_DIR}/assets")
+set(outputName "")
 
+# Copy all the assets to the build directory
+foreach(DEST ${DESTINATIONS})
+    file(GLOB_RECURSE ASSETS_FILES "${ASSETS_DIR}/*")
+    foreach(asset ${ASSETS_FILES})
+        # Get the path
+        file(RELATIVE_PATH outputName ${ASSETS_DIR} ${asset})
+        # Get the path relative to the build but without the name. 
+        get_filename_component(outputName "${CMAKE_CURRENT_BINARY_DIR}/${DEST}/assets/${outputName}" DIRECTORY)
+        # Copy the file to the destination
+        file(COPY "${asset}" DESTINATION ${outputName})
+    endforeach()
+endforeach()
+
+# Copy the source
 file(GLOB_RECURSE SOURCE "source/*.*")
 foreach(SRC_FILE ${SOURCE})
   file(RELATIVE_PATH RELATIVE ${CMAKE_SOURCE_DIR} ${SRC_FILE})
@@ -51,5 +69,6 @@ foreach(SRC_FILE ${SOURCE})
   source_group(${SRC_FILE_DIR} FILES ${SRC_FILE})
 endforeach()
 
+# Create .exe and link the libraries
 add_executable (${PROJECT_NAME} ${SOURCE})
 target_link_libraries(${PROJECT_NAME} ${LIB_FILES})
